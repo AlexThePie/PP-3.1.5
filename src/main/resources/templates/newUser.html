@@ -3,30 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>NewUserPage</title>
-  <style>
-    body {
-      font-size: x-large;
-    }
 
-    table {
-      border-collapse: collapse;
-    }
 
-    th, td {
-      border: 1px solid;
-      align-content: center;
-    }
-
-    tr:hover td {
-      background-color: lightblue;
-    }
-
-    .no-border {
-      border: 0;
-    }
-  </style>
 </head>
 <body>
+
 <h2>Добавление нового пользователя</h2>
 <form th:method="POST" th:action="@{/admin}" th:object="${user}">
   <label for="name">Имя: </label>
@@ -46,11 +27,11 @@
   <br>
 
   <label>Права доступа:
-    <input type="checkbox" name="roles"
-           th:each="role : ${rolesAdd}"
-           th:value="${role.id}"
-           th:text="${role.name}"
-    />
+    <select size="2" multiple name="roles" required="required">
+      <option  value="1">ADMIN</option>
+      <option selected="selected" value="2">USER</option>
+    </select>
+
   </label>
   <br>
   <br>

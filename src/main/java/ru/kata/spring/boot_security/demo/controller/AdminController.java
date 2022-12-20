@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
 import ru.kata.spring.boot_security.demo.service.UserService;
 import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 
 @Controller
@@ -42,7 +44,7 @@ public class AdminController {
     }
 
     @GetMapping("/addUser")
-    public String addNewUser(Model model, @ModelAttribute("user") User user) {
+    public String addNewUser(Model model, @ModelAttribute("user") User user ) {
         List<Role> roles = roleService.getUniqAllRoles();
         model.addAttribute("rolesAdd", roles);
         return "newUser";
