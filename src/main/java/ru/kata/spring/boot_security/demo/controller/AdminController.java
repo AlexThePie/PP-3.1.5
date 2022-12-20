@@ -51,9 +51,12 @@ public class AdminController {
     }
 
     @PostMapping
-    public String addCreateNewUser(@ModelAttribute("user") User user) {
-        userService.createNewUser(user);
-        return "redirect:/admin";
+    public String addCreateNewUser(@ModelAttribute("user") User user,Model model) {
+        try {
+            userService.createNewUser(user);
+        } catch (Exception er) {
+            System.err.println("Пользователь с таким email уже существует!");
+        }return "redirect:/admin";
     }
 
     @GetMapping("/{id}/editUser")
@@ -66,7 +69,11 @@ public class AdminController {
 
     @PatchMapping("/{id}")
     public String updateUser(@ModelAttribute("user") User user) {
-        userService.updateUser(user);
+        try{
+            userService.updateUser(user);
+        }catch (Exception e) {
+            System.err.println("Пользователь с таким email уже существует!");
+        }
         return "redirect:/admin";
     }
 
