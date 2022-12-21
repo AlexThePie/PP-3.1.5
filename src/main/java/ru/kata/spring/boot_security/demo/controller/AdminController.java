@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.trace.http.HttpTrace;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 
 import javax.persistence.NoResultException;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -30,8 +32,10 @@ public class AdminController {
     }
 
     @GetMapping
-    public String showAllUsers(Model model) {
+    public String showAllUsers(Model model, Principal principal) {
         model.addAttribute("users", userService.getAllUsers());
+        User princ = userService.findUserByUsername(principal.getName());
+        model.addAttribute("princ", princ);
         model.addAttribute("titleTable", "Список всех пользователей:");
         return "admin";
     }
@@ -43,23 +47,34 @@ public class AdminController {
         return "user";
     }
 
-    @GetMapping("/addUser")
+    @GetMapping("/user-create")
     public String addNewUser(Model model, @ModelAttribute("user") User user ) {
-        List<Role> roles = roleService.getUniqAllRoles();
-        model.addAttribute("rolesAdd", roles);
-        return "newUser";
+        //List<Role> roles = roleService.getUniqAllRoles();
+        //model.addAttribute("rolesAdd", roles);
+        return "admin";
     }
 
-    @PostMapping
-    public String addCreateNewUser(@ModelAttribute("user") User user,Model model) {
+    @PostMapping("/user-create")
+    public String addCreateNewUser( User user) {
         try {
             userService.createNewUser(user);
         } catch (Exception er) {
             System.err.println("Пользователь с таким email уже существует!");
         }return "redirect:/admin";
     }
+    @PatchMapping("/user-update")
+    public String updateUser(User user) {
+        userService.updateUser(user);
+        return "redirect:/admin";
+    }
 
-    @GetMapping("/{id}/editUser")
+    @GetMapping("/user-update/{id}")
+    public String updateUserForm(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("user", userService.getUser(id));
+        return "admin";
+    }
+
+    /*@GetMapping("/{id}/editUser")
     public String edit(Model model, @PathVariable("id") Long id) {
         model.addAttribute("user", userService.getUser(id));
         List<Role> roles = roleService.getUniqAllRoles();
@@ -75,11 +90,28 @@ public class AdminController {
             System.err.println("Пользователь с таким email уже существует!");
         }
         return "redirect:/admin";
-    }
-
-    @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable("id") Long id) {
+    }*/
+    @DeleteMapping("/user-delete")
+    public String deleteUser(Long id) {
         userService.deleteUser(id);
         return "redirect:/admin";
     }
+
+    @GetMapping("/delete/{id}")
+    public String deleteUserForm(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("user", userService.getUser(id));
+        return "admin";
+    }
+
+    /*@DeleteMapping("/{id}/delete")
+    public String deleteUser(Long id) {
+        userService.deleteUser(id);
+        return "redirect:/admin";
+    }
+    @GetMapping("/delete/{id}")
+    public String deleteUserForm(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("user", userService.getUser(id));
+        return "admin";
+    }*/
+
 }

@@ -8,7 +8,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
+
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 import java.util.List;
@@ -23,6 +25,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserServiceImpl(UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+
     }
 
 
@@ -36,18 +39,26 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
     }
-
-
-
-    @Override
-    public User getUser(Long id) {
-        return userRepository.findById(id).get();
-    }
-
     @Transactional
     public void updateUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+    }
+
+    /*@Transactional
+    public void updateUser(User user) {
+        User updateUser = userRepository.findByUsername(user.getUsername());
+        updateUser.setId(user.getId());
+        updateUser.setName(user.getName());
+        updateUser.setLast_name(user.getLast_name());
+        updateUser.setUsername(user.getUsername());
+        updateUser.setRoles(user.getRoles());
+        userRepository.save(updateUser);
+    }*/
+
+    @Override
+    public User getUser(Long id) {
+        return userRepository.findById(id).get();
     }
 
     @Transactional
