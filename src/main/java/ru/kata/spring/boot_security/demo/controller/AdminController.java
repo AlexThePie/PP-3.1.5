@@ -2,21 +2,16 @@ package ru.kata.spring.boot_security.demo.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.trace.http.HttpTrace;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
 import ru.kata.spring.boot_security.demo.service.UserService;
 import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
-
-import javax.persistence.NoResultException;
 import java.security.Principal;
-import java.util.List;
+
 
 @Controller
 @RequestMapping("/admin")
@@ -74,23 +69,8 @@ public class AdminController {
         return "admin";
     }
 
-    /*@GetMapping("/{id}/editUser")
-    public String edit(Model model, @PathVariable("id") Long id) {
-        model.addAttribute("user", userService.getUser(id));
-        List<Role> roles = roleService.getUniqAllRoles();
-        model.addAttribute("rolesAdd", roles);
-        return "edit";
-    }
 
-    @PatchMapping("/{id}")
-    public String updateUser(@ModelAttribute("user") User user) {
-        try{
-            userService.updateUser(user);
-        }catch (Exception e) {
-            System.err.println("Пользователь с таким email уже существует!");
-        }
-        return "redirect:/admin";
-    }*/
+
     @DeleteMapping("/user-delete")
     public String deleteUser(Long id) {
         userService.deleteUser(id);
@@ -103,15 +83,6 @@ public class AdminController {
         return "admin";
     }
 
-    /*@DeleteMapping("/{id}/delete")
-    public String deleteUser(Long id) {
-        userService.deleteUser(id);
-        return "redirect:/admin";
-    }
-    @GetMapping("/delete/{id}")
-    public String deleteUserForm(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("user", userService.getUser(id));
-        return "admin";
-    }*/
+
 
 }

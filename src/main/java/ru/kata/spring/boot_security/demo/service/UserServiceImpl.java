@@ -45,17 +45,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRepository.save(user);
     }
 
-    /*@Transactional
-    public void updateUser(User user) {
-        User updateUser = userRepository.findByUsername(user.getUsername());
-        updateUser.setId(user.getId());
-        updateUser.setName(user.getName());
-        updateUser.setLast_name(user.getLast_name());
-        updateUser.setUsername(user.getUsername());
-        updateUser.setRoles(user.getRoles());
-        userRepository.save(updateUser);
-    }*/
-
     @Override
     public User getUser(Long id) {
         return userRepository.findById(id).get();
