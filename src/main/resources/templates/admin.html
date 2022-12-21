@@ -113,14 +113,11 @@
                                                                        class="form-control" id="lastNameEdit"
                                                                        required minlength="2" maxlength="20"/>
                                                             </div>
-
-
                                                             <div class="mb-3">
-                                                                <label for="UsernameEdit"
-                                                                       class="col-form-label">Username</label>
-                                                                <input type="text"
+                                                                <label for="UsernameEdit" class="col-form-label">Username</label>
+                                                                <input type="email"
                                                                        th:value="${user.username}" name="username"
-                                                                       class="form-control" id="UsernameEdit" readonly/>
+                                                                       class="form-control" id="UsernameEdit" />
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="passEdit"
@@ -134,10 +131,10 @@
                                                                 <label class="container-fluid "
                                                                        for="rolesEdit">Role</label>
                                                                 <select id="rolesEdit" class="form-select col-md-5"
-                                                                        th:value="${user.roles}" name="roles"
+                                                                        th:value="${user.roles}" name="roles" required="required"
                                                                         multiple="" size="2">
                                                                     <option value="1">ADMIN</option>
-                                                                    <option value="2">USER</option>
+                                                                    <option selected="selected" value="2">USER</option>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -253,8 +250,8 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="loginNew" class="col-form-label">Login</label>
-                                    <input type="text" name="Username"
+                                    <label for="loginNew" class="col-form-label">Email</label>
+                                    <input type="email" name="Username"
                                            class="form-control" id="loginNew"/>
                                 </div>
                                 <div class="mb-3">
@@ -268,7 +265,7 @@
                                     <select id="rolesNew" class="form-select col-md-5"
                                             name="roles" multiple="" size="2">
                                         <option value="1">ADMIN</option>
-                                        <option value="2">USER</option>
+                                        <option selected= "selected" value="2">USER</option>
                                     </select>
                                 </div>
                                 <div class="d-grid col-6 mx-auto">
@@ -291,7 +288,7 @@
                             <th>ID</th>
                             <th>Name</th>
                             <th>Last Name</th>
-                            <th>Login</th>
+                            <th>Email</th>
                             <th>Roles</th>
                         </tr>
                         </thead>
