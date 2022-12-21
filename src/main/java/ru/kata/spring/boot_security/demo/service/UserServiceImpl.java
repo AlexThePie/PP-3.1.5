@@ -14,7 +14,7 @@ import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 import java.util.List;
 
 @Service
-@Transactional
+
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
