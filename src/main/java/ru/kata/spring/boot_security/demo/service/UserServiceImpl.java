@@ -21,11 +21,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
     @Autowired
     public UserServiceImpl(UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
+
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -33,9 +35,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Transactional
     public void createNewUser(User user) {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            userRepository.save(user);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
     }
+
     @Transactional
     public void updateUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -74,5 +77,5 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 user.getUsername(), user.getPassword(), user.getAuthorities());
     }
 
-    }
+}
 

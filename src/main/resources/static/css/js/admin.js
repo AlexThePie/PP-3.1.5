@@ -1,4 +1,4 @@
-//Таблица всех пользователей
+
 const url = 'http://localhost:8080/api/admin';
 const renderTable = document.getElementById("allUsersTable");
 const addForm = document.getElementById("add-form");
@@ -36,7 +36,7 @@ function getAllUsers() {
 
 getAllUsers()
 
-// Добавление пользователя
+
 
 addForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -91,7 +91,7 @@ function getRoles(rols) {
 }
 
 
-// Delete
+
 function deleteModal(id) {
     fetch(url + '/' + id, {
         headers: {
@@ -173,7 +173,7 @@ async function editUser() {
     document.getElementById("editFormCloseButton").click(); //???
 }
 
-//User
+
 const tableForUser = document.getElementById("tableForUser");
 const urlAuth = 'http://localhost:8080/api/admin/authentication';
 const panel = document.getElementById("admin-panel1");
