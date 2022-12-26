@@ -12,20 +12,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import javax.validation.Valid;
 import java.util.List;
 
-@RestController
+@org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api")
-public class RESTController {
+public class RestController {
     private final UserService userService;
 
     @Autowired
-    public RESTController(UserService userService) {
+    public RestController(UserService userService) {
         this.userService = userService;
     }
 
@@ -67,14 +66,4 @@ public class RESTController {
         return new ResponseEntity<>(userService.getAuthUser(), HttpStatus.OK);
     }
 
-    private String getStringMessage(BindingResult bindingResult) {
-        StringBuilder sb = new StringBuilder();
-        List<FieldError> listErrors = bindingResult.getFieldErrors();
-        for (FieldError error : listErrors) {
-            sb.append(error.getField())
-                    .append(" - ").append(error.getDefaultMessage())
-                    .append("; ");
-        }
-        return sb.toString();
-    }
 }

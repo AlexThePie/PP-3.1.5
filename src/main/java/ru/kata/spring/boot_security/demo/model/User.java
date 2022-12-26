@@ -1,14 +1,9 @@
 package ru.kata.spring.boot_security.demo.model;
 
 
-
-import net.bytebuddy.implementation.bind.annotation.Default;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -44,7 +39,6 @@ public class User implements UserDetails {
     @JoinTable(name = "users_roles",
             joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id",referencedColumnName = "id")})
-    //@Value("${user.roles: user")
     private Set<Role> roles;
 
     public User() {
@@ -97,11 +91,9 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
-
     }
     @Override
     public boolean isAccountNonExpired() {
